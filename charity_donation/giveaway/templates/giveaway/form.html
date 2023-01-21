@@ -2,25 +2,9 @@
 {% load static %}
 
 {% block header %}
-  <header class="header--main-page">
+  <header class="header--form-page">
     {% block menu %}
-      <nav class="container container--70">
-        {% block login %}
-          <ul class="nav--actions">
-            <li class="logged-user">
-              Witaj Agata
-              <ul class="dropdown">
-                <li><a href="#">Profil</a></li>
-                <li><a href="#">Ustawienia</a></li>
-                <li><a href="#">Wyloguj</a></li>
-              </ul>
-            </li>
-          </ul>
-        {% endblock %}
-          {% block menu_bar %}
-          {{ block.super }}
-          {% endblock %}
-      </nav>
+      {% include "giveaway/menu.html" with LOGGED=True SHOW_DONATION_BUTTON=False %}
     {% endblock %}
     {% block slogan %}
       <div class="slogan container container--90">

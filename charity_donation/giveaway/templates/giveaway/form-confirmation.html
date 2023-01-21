@@ -4,29 +4,7 @@
 {% block header %}
   <header class="header--form-page">
     {% block menu %}
-      <nav class="container container--70">
-        {% block login %}
-          <ul class="nav--actions">
-            <li class="logged-user">
-              Witaj Agata
-              <ul class="dropdown">
-                <li><a href="#">Profil</a></li>
-                <li><a href="#">Moje zbiórki</a></li>
-                <li><a href="#">Wyloguj</a></li>
-              </ul>
-            </li>
-          </ul>
-        {% endblock %}
-        {% block menu_bar %}
-          <ul>
-            <li><a href="index.html" class="btn btn--without-border active">Start</a></li>
-            <li><a href="index.html#steps" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="index.html#about-us" class="btn btn--without-border">O nas</a></li>
-            <li><a href="index.html#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="index.html#contact" class="btn btn--without-border">Kontakt</a></li>
-          </ul>
-        {% endblock %}
-      </nav>
+      {% include "giveaway/menu.html" with LOGGED=True SHOW_DONATION_BUTTON=False %}
     {% endblock %}
     {% block slogan %}
       <div class="slogan container container--90">

@@ -1,0 +1,37 @@
+<nav class="container container--70">
+  {% if LOGGED %}
+    <ul class="nav--actions">
+      <li class="logged-user">
+        Witaj Agata
+        <ul class="dropdown">
+          <li><a href="#">Profil</a></li>
+          <li><a href="#">Ustawienia</a></li>
+          <li><a href="#">Wyloguj</a></li>
+        </ul>
+      </li>
+    </ul>
+  {% else %}
+    <ul class="nav--actions">
+      <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
+      <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+    </ul>
+  {% endif %}
+  {% if SHOW_DONATION_BUTTON %}
+    <ul>
+      <li><a href="" class="btn btn--without-border active">Start</a></li>
+      <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>
+      <li><a href="#about-us" class="btn btn--without-border">O nas</a></li>
+      <li><a href="#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+      <li><a href="form.html" class="btn btn--without-border">Przekaż dary</a></li>
+      <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
+    </ul>
+  {% else %}
+    <ul>
+      <li><a href="index.html" class="btn btn--without-border active">Start</a></li>
+      <li><a href="index.html#steps" class="btn btn--without-border">O co chodzi?</a></li>
+      <li><a href="index.html#about-us" class="btn btn--without-border">O nas</a></li>
+      <li><a href="index.html#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+      <li><a href="index.html#contact" class="btn btn--without-border">Kontakt</a></li>
+    </ul>
+  {% endif %}
+</nav>
