@@ -6,8 +6,8 @@ from .models import Donation
 
 class LandingPage(View):
     def get(self, request):
-        donated_bags = Donation.objects.aggregate(quantity=Sum('quantity'))
-        supported_institutions = Donation.objects.aggregate(quantity=Count('institution', distinct=True))
+        donated_bags = Donation.objects.aggregate(sum=Sum('quantity'))
+        supported_institutions = Donation.objects.aggregate(count=Count('institution', distinct=True))
         ctx = {
             'donated_bags': donated_bags,
             'supported_institutions': supported_institutions,
