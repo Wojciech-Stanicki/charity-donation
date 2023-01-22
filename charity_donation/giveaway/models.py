@@ -36,7 +36,7 @@ class Institution(models.Model):
 class Donation(models.Model):
     quantity = models.IntegerField(verbose_name="ilość worków")
     categories = models.ManyToManyField(Category, verbose_name="kategorie")
-    institution = models.ForeignKey(Institution, on_delete=models.SET_NULL, null=True, verbose_name="instytucja")
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     address = models.CharField(max_length=80, verbose_name="adres")
     phone_number = models.CharField(max_length=15, verbose_name="numer telefonu")
     zip_code = models.CharField(max_length=16, verbose_name="kod pocztowy")
