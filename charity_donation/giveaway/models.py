@@ -46,7 +46,7 @@ class Donation(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None, verbose_name="użytkownik")
 
     def __str__(self):
-        return f'dotacja {self.user.name}: {self.quantity} worków dla {self.institution.name}'
+        return f'dotacja {self.user.username}: {self.quantity} worków dla {self.institution.name}'
 
     class Meta:
         verbose_name = "Dotacja"
