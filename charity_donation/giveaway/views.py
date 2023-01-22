@@ -1,12 +1,18 @@
 from django.shortcuts import render
 from django.views import View
+from django.db.models import Sum, Count
+from .models import Donation
+
 
 class LandingPage(View):
     def get(self, request):
-        # ctx = {
-        #     'number_of_donations': addresses,
-        # }
-        return render(request, "giveaway/index.html")
+        donated_bags = Donation.objects.aggregate(quantity=Sum('quantity'))
+        supported_institutions = Donation.objects.aggregate(quantity=Count('institution', distinct=True))
+        ctx = {
+            'donated_bags': donated_bags,
+            'supported_institutions': supported_institutions,
+        }
+        return render(request, "giveaway/index.html", ctx)
 
 
 class AddDonation(View):
