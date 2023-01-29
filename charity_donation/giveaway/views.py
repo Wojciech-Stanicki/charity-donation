@@ -86,6 +86,11 @@ class Register(View):
         return render(request, self.template_name, ctx)
 
 
+class UserProfile(View):
+    def get(self, request):
+        return render(request, "giveaway/user-profile.html")
+
+
 class FormConfimation(View):
     def get(self, request):
         return render(request, "giveaway/form-confirmation.html")

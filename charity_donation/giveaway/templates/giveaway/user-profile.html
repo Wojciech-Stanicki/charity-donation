@@ -1,0 +1,28 @@
+{% extends 'giveaway/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="user-donations" class="help">
+  <h2>Profil użytkownika</h2>
+  <h1 style="text-align: center">
+    <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+    <p>{{ request.user.email }}</p>
+  </h1>
+
+  <div class="help--slides active">
+    <p>Lista przekazanych darów:</p>
+
+    <ul class="help--slides-items">
+        <li>
+          <div class="col">
+            <div class="title">Instytucja</div>
+            <div class="subtitle">ilość worków z danych kategorii</div>
+          </div>
+          <div class="col">
+            <div class="text">data i czas odbioru</div>
+          </div>
+        </li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
