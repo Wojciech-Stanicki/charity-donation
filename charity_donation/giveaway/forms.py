@@ -7,3 +7,8 @@ class UserRegisterForm(forms.Form):
     email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
     password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
     password_repeat = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Powtórz hasło'}))
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
