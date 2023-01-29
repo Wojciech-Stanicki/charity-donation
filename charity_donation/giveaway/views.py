@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.db.models import Sum, Count
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Donation, Institution
 from .forms import UserRegisterForm, LoginForm
@@ -49,7 +49,13 @@ class Login(View):
             if user:
                 login(request, user)
             else:
-                return redirect(reverse('register')+'#register-form')
+                return redirect(reverse('register') + '#register-form')
+        return redirect('index')
+
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
         return redirect('index')
 
 
