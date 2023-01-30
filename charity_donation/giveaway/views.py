@@ -50,8 +50,8 @@ class Login(View):
     def post(self, request):
         form = LoginForm(request.POST)
         next_page = self.request.GET.get('next')
-        if next_page:
-            redirect_url = next_page
+        if next_page == reverse('add-donation'):
+            redirect_url = next_page + '#donation-form'
         else:
             redirect_url = reverse('index')
         if form.is_valid():
@@ -100,7 +100,12 @@ class Register(View):
 
 class UserProfile(View):
     def get(self, request):
-        return render(request, "giveaway/user-profile.html")
+        current_user = request.user
+        user_donations = current_user.donation_set.all()
+        ctx = {
+            'user_donations': user_donations,
+        }
+        return render(request, "giveaway/user-profile.html", ctx)
 
 
 class FormConfimation(View):

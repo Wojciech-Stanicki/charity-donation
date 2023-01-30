@@ -2,27 +2,31 @@
 {% load static %}
 
 {% block content %}
-<section id="user-donations" class="help">
-  <h2>Profil użytkownika</h2>
-  <h1 style="text-align: center">
-    <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
-    <p>{{ request.user.email }}</p>
-  </h1>
+  <section id="user-donations" class="help">
+    <h2>Profil użytkownika</h2>
+    <h1 style="text-align: center">
+      <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+      <p>{{ request.user.email }}</p>
+    </h1>
 
-  <div class="help--slides active">
-    <p>Lista przekazanych darów:</p>
+    <div class="help--slides active">
+      <p>Lista darów:</p>
 
-    <ul class="help--slides-items">
-        <li>
-          <div class="col">
-            <div class="title">Instytucja</div>
-            <div class="subtitle">ilość worków z danych kategorii</div>
-          </div>
-          <div class="col">
-            <div class="text">data i czas odbioru</div>
-          </div>
-        </li>
-    </ul>
-  </div>
-</section>
+      {% for donation in user_donations %}
+        <ul class="help--slides-items">
+            <li>
+              <div class="col">
+                <div class="title">Liczba przekazanych worków: <strong>{{ donation.quantity }}</strong></div>
+                <div class="subtitle">Zawartość: {{ donation.categories.all|join:", " }}<br>Organizacja: {{ donation.institution.name }}</div>
+              </div>
+              <div class="col">
+                <div class="text">Data i czas odbioru: {{ donation.pick_up_date|date:"j E Y" }} {{ donation.pick_up_time|time:"H:i" }}</div>
+              </div>
+            </li>
+        </ul>
+      {% empty %}
+        <p>Jeszcze nie przekazałeś żadnych darów.</p>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}
