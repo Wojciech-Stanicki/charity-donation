@@ -37,57 +37,6 @@
   </header>
 {% endblock %}
 
-
-<!--<header class="header&#45;&#45;form-page">-->
-<!--  <nav class="container container&#45;&#45;70">-->
-<!--    <ul class="nav&#45;&#45;actions">-->
-<!--      <li class="logged-user">-->
-<!--        Witaj Agata-->
-<!--        <ul class="dropdown">-->
-<!--          <li><a href="#">Profil</a></li>-->
-<!--          <li><a href="#">Ustawienia</a></li>-->
-<!--          <li><a href="#">Wyloguj</a></li>-->
-<!--        </ul>-->
-<!--      </li>-->
-<!--    </ul>-->
-
-<!--    <ul>-->
-<!--      <li><a href="index.html" class="btn btn&#45;&#45;without-border active">Start</a></li>-->
-<!--      <li><a href="index.html#steps" class="btn btn&#45;&#45;without-border">O co chodzi?</a></li>-->
-<!--      <li><a href="index.html#about-us" class="btn btn&#45;&#45;without-border">O nas</a></li>-->
-<!--      <li><a href="index.html#help" class="btn btn&#45;&#45;without-border">Fundacje i organizacje</a></li>-->
-<!--      <li><a href="form.html" class="btn btn&#45;&#45;without-border">Przekaż dary</a></li>-->
-<!--      <li><a href="index.html#contact" class="btn btn&#45;&#45;without-border">Kontakt</a></li>-->
-<!--    </ul>-->
-<!--  </nav>-->
-
-<!--  <div class="slogan container container&#45;&#45;90">-->
-<!--    <div class="slogan&#45;&#45;item">-->
-<!--      <h1>-->
-<!--        Oddaj rzeczy, których już nie chcesz<br />-->
-<!--        <span class="uppercase">potrzebującym</span>-->
-<!--      </h1>-->
-
-<!--      <div class="slogan&#45;&#45;steps">-->
-<!--        <div class="slogan&#45;&#45;steps-title">Wystarczą 4 proste kroki:</div>-->
-<!--        <ul class="slogan&#45;&#45;steps-boxes">-->
-<!--          <li>-->
-<!--            <div><em>1</em><span>Wybierz rzeczy</span></div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div><em>2</em><span>Spakuj je w worki</span></div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div><em>3</em><span>Wybierz fundację</span></div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div><em>4</em><span>Zamów kuriera</span></div>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</header>-->
 {% block content %}
   <section id="donation-form" class="form--steps">
     <div class="form--steps-instructions">
@@ -116,56 +65,21 @@
         <!-- STEP 1: class .active is switching steps -->
         <div data-step="1" class="active">
           <h3>Zaznacz co chcesz oddać:</h3>
-
+          {% for category in categories %}
           <div class="form-group form-group--checkbox">
             <label>
               <input
                 type="checkbox"
                 name="categories"
-                value="clothes-to-use"
+                value="{{  category.id  }}"
               />
               <span class="checkbox"></span>
-              <span class="description"
-                >ubrania, które nadają się do ponownego użycia</span
-              >
+              <span class="description">
+                {{ category.name }}
+              </span>
             </label>
           </div>
-
-          <div class="form-group form-group--checkbox">
-            <label>
-              <input
-                type="checkbox"
-                name="categories"
-                value="clothes-useless"
-              />
-              <span class="checkbox"></span>
-              <span class="description">ubrania, do wyrzucenia</span>
-            </label>
-          </div>
-
-          <div class="form-group form-group--checkbox">
-            <label>
-              <input type="checkbox" name="categories" value="toys" />
-              <span class="checkbox"></span>
-              <span class="description">zabawki</span>
-            </label>
-          </div>
-
-          <div class="form-group form-group--checkbox">
-            <label>
-              <input type="checkbox" name="categories" value="books" />
-              <span class="checkbox"></span>
-              <span class="description">książki</span>
-            </label>
-          </div>
-
-          <div class="form-group form-group--checkbox">
-            <label>
-              <input type="checkbox" name="categories" value="other" />
-              <span class="checkbox"></span>
-              <span class="description">inne</span>
-            </label>
-          </div>
+          {% endfor %}
 
           <div class="form-group form-group--buttons">
             <button type="button" class="btn next-step">Dalej</button>

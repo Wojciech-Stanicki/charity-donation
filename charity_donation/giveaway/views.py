@@ -4,8 +4,9 @@ from django.views import View
 from django.db.models import Sum, Count
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 from .forms import UserRegisterForm, LoginForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class LandingPage(View):
@@ -25,16 +26,22 @@ class LandingPage(View):
         return render(request, "giveaway/index.html", ctx)
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request):
-        return render(request, "giveaway/form.html")
+        categories = Category.objects.all()
+        ctx = {
+            'categories': categories,
+        }
+        return render(request, "giveaway/form.html", ctx)
 
 
 class Login(View):
     template_name = "giveaway/login.html"
 
     def get(self, request):
-        form = UserRegisterForm()
+        form = LoginForm()
         ctx = {
             'login_form': form,
         }
@@ -42,6 +49,11 @@ class Login(View):
 
     def post(self, request):
         form = LoginForm(request.POST)
+        next_page = self.request.GET.get('next')
+        if next_page:
+            redirect_url = next_page
+        else:
+            redirect_url = reverse('index')
         if form.is_valid():
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
@@ -50,7 +62,7 @@ class Login(View):
                 login(request, user)
             else:
                 return redirect(reverse('register') + '#register-form')
-        return redirect('index')
+        return redirect(redirect_url)
 
 
 class Logout(View):
