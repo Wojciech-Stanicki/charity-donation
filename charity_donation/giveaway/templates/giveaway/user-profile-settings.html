@@ -1,0 +1,22 @@
+{% extends 'giveaway/base.html' %}
+{% load static %}
+
+{% block content %}
+  <section id="settings-form" class="login-page">
+    <h2>Ustawienia konta</h2>
+    <form action="#" method="post">
+      {% csrf_token %}
+      {% for field in user_profile_data_form %}
+      <div class="form-group">
+        {{ field }}
+      </div>
+      {% endfor %}
+
+      <div class="form-group form-group--buttons">
+        <button class="btn" type="submit">Zmień dane</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
+
+

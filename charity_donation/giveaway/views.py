@@ -5,7 +5,7 @@ from django.db.models import Sum, Count
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Donation, Institution, Category
-from .forms import UserRegisterForm, LoginForm
+from .forms import UserRegisterForm, LoginForm, UserUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -124,6 +124,38 @@ class UserProfile(View):
         ctx = {
             'user_donations': user_donations,
         }
+        return render(request, self.template_name, ctx)
+
+
+class UpdateUserProfile(LoginRequiredMixin, View):
+    login_url = 'login'
+    template_name = "giveaway/user-profile-settings.html"
+
+    def get(self, request):
+        current_user = self.request.user
+        form = UserUpdateForm(initial={'first_name': current_user.first_name,
+                                       'last_name': current_user.last_name,
+                                       'email': current_user.email,
+                                       })
+        ctx = {
+            'user_profile_data_form': form,
+        }
+        return render(request, self.template_name, ctx)
+
+    def post(self, request):
+        current_user = self.request.user
+        form = UserUpdateForm(request.POST)
+        ctx = {
+            'user_profile_data_form': form,
+        }
+        if form.is_valid():
+            User.objects.filter(id=current_user.id).update(
+                username=form.cleaned_data.get('email'),
+                email=form.cleaned_data.get('email'),
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+            )
+            return redirect("profile-settings")
         return render(request, self.template_name, ctx)
 
 
