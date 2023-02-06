@@ -2,31 +2,38 @@
 {% load static %}
 
 {% block content %}
-  <section id="user-donations" class="help">
-    <h2>Profil użytkownika</h2>
-    <h1 style="text-align: center">
-      <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
-      <p>{{ request.user.email }}</p>
-    </h1>
+  <form method="post">
+    {% csrf_token %}
+    <section id="user-donations" class="help">
+      <h2>Profil użytkownika</h2>
+      <h1 style="text-align: center">
+        <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+        <p>{{ request.user.email }}</p>
+      </h1>
 
-    <div class="help--slides active">
-      <p>Lista darów:</p>
+      <div class="help--slides active">
+        <p>Lista darów:</p>
+          {% for donation in user_donations %}
+            <ul class="help--slides-items {% if donation.is_taken %} checked {% endif %}">
+              <li>
+                <div class="col">
+                  <div class="title">Liczba przekazanych worków: <strong>{{ donation.quantity }}</strong></div>
+                  <div class="subtitle">Zawartość: {{ donation.categories.all|join:", " }}<br>Organizacja: {{ donation.institution.name }}</div>
+                </div>
+                <div class="col">
+                  <div class="text">
+                    Data i czas odbioru: {{ donation.pick_up_date|date:"j E Y" }} {{ donation.pick_up_time|time:"H:i" }}<br>
+                    Dary zostały odebrane: <input type="checkbox" name="{{ donation.id }}" {% if donation.is_taken %} checked {% endif %}>
+                  </div>
+                </div>
+              </li>
+            </ul>
 
-      {% for donation in user_donations %}
-        <ul class="help--slides-items">
-            <li>
-              <div class="col">
-                <div class="title">Liczba przekazanych worków: <strong>{{ donation.quantity }}</strong></div>
-                <div class="subtitle">Zawartość: {{ donation.categories.all|join:", " }}<br>Organizacja: {{ donation.institution.name }}</div>
-              </div>
-              <div class="col">
-                <div class="text">Data i czas odbioru: {{ donation.pick_up_date|date:"j E Y" }} {{ donation.pick_up_time|time:"H:i" }}</div>
-              </div>
-            </li>
-        </ul>
-      {% empty %}
-        <p>Jeszcze nie przekazałeś żadnych darów.</p>
-      {% endfor %}
-    </div>
-  </section>
+          {% empty %}
+            <p>Jeszcze nie przekazałeś żadnych darów.</p>
+          {% endfor %}
+        <p><input type="submit" value="Zapisz zmiany"></p>
+      </div>
+    </section>
+  </form>
 {% endblock %}

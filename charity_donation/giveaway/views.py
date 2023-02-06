@@ -99,13 +99,32 @@ class Register(View):
 
 
 class UserProfile(View):
+    template_name = "giveaway/user-profile.html"
+
     def get(self, request):
         current_user = request.user
-        user_donations = current_user.donation_set.all()
+        user_donations = current_user.donation_set.all().order_by('is_taken', 'pick_up_date', 'pick_up_time')
         ctx = {
             'user_donations': user_donations,
         }
-        return render(request, "giveaway/user-profile.html", ctx)
+        return render(request, self.template_name, ctx)
+
+    def post(self, request):
+        current_user = request.user
+        user_donations = current_user.donation_set.all()
+        for donation in user_donations:
+            checkbox_state = request.POST.get(str(donation.id))
+            if checkbox_state is None:
+                new_is_taken_value = False
+            else:
+                new_is_taken_value = True
+            donation.is_taken = new_is_taken_value
+            donation.save()
+        user_donations = current_user.donation_set.all().order_by('is_taken', 'pick_up_date', 'pick_up_time')
+        ctx = {
+            'user_donations': user_donations,
+        }
+        return render(request, self.template_name, ctx)
 
 
 class FormConfimation(View):

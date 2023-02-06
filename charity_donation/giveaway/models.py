@@ -44,6 +44,7 @@ class Donation(models.Model):
     pick_up_time = models.TimeField(verbose_name="czas odbioru")
     pick_up_comment = models.TextField(verbose_name="komentarz")
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, default=None, verbose_name="użytkownik")
+    is_taken = models.BooleanField(default=False, verbose_name="odebrano?")
 
     def __str__(self):
         return f'dotacja {self.user.username}: {self.quantity} worków dla {self.institution.name}'
